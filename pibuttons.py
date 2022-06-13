@@ -6,6 +6,18 @@
 # Based on https://github.com/stenobot/SoundMatrixPi
 #
 
+"""
+pibuttons.py collects some functions used to sample the 4x4 button matrix in the ButtonMatrix class.
+"""
+
+__author__ = "David C. Petty"
+__copyright__ = "Copyright 2022, David C. Petty"
+__license__ = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+__version__ = "0.0.2"
+__maintainer__ = "David C. Petty"
+__email__ = "david_petty@psbma.org"
+__status__ = "Hack"
+
 import RPi.GPIO as GPIO
 import time
 
@@ -13,14 +25,18 @@ class ButtonMatrix():
 
     def __init__(self):
         """Initialize ButtonMatrix internal data and GPIO."""
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
 
         # matrix button ids
         self.buttonIDs = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-        # gpio inputs for rows - top to bottom
-        self.rowPins = [27,22,5,6]
-        # gpio outputs for columns - left to right
+        # gpio inputs for rows - top to bottom - for GPIO.BCM
+        self.rowPins = [27, 22, 5, 6]
+        # gpio outputs for columns - left to right - for GPIO.BCM
         self.columnPins = [25, 26, 19, 13, ]
+        # gpio inputs for rows - top to bottom - for GPIO.BOARD
+        self.rowPins = [13, 15, 29, 31, ]
+        # gpio outputs for columns - left to right - for GPIO.BOARD
+        self.columnPins = [22, 37, 35, 33, ]
         # buttons held down
         self.buttons = [ [ 0 for c in self.columnPins ] for r in self.rowPins ]
         self.pressed = [ [ 0 for c in self.columnPins ] for r in self.rowPins ]
@@ -31,8 +47,8 @@ class ButtonMatrix():
 
         # define four outputs and set to high
         for j in range(len(self.columnPins)):
-            GPIO.setup(self.columnPins[j], GPIO.OUT)
-            GPIO.output(self.columnPins[j], 1)
+            # GPIO.setup(self.columnPins[j], GPIO.OUT)
+            # GPIO.output(self.columnPins[j], 1)
             # Actually, set four columns to tristate input.
             GPIO.setup(self.columnPins[j], GPIO.IN, pull_up_down = GPIO.PUD_OFF)
 
@@ -72,6 +88,7 @@ class ButtonMatrix():
     def cleanup(self):
         """Cleanup GPIO."""
         GPIO.cleanup()
+
 
 def main():
     # initial the button matrix
