@@ -11,7 +11,7 @@ pileds.py collects some functions used to drive the 8x8 max7219 LED grid in the 
 __author__ = "David C. Petty"
 __copyright__ = "Copyright 2022, David C. Petty"
 __license__ = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __maintainer__ = "David C. Petty"
 __email__ = "david_petty@psbma.org"
 __status__ = "Hack"
@@ -46,8 +46,8 @@ class PiLEDs:
     @staticmethod
     def _padleds(lights, w, h):
         """Transform lights 2D list of digits to h x w 2D list of digits."""
-        return ([ (row + [ 0, ] * w)[: w]
-            for row in lights ] + [ [ 0, ] * w ] * h)[ : h]
+        return ([ (row + [ 0 for r in range(w) ])[: w]
+            for row in lights ] + [ [ 0 for r in range(w) ] for c in range(h) ])[ : h]
 
     def clear(self):
         """Clear LED grid."""
@@ -73,15 +73,14 @@ class PiLEDs:
         """"Display string in micro:bit format to max7219 LED grid."""
         self.leds(self._microbitsplit(string))
 
-
 if __name__ == "__main__":
     import time
     smiley = (
-        f"00111100:"
+        f"00100100:"
         f"01000010:"
-        f"10000001:"
         f"10100101:"
         f"10000001:"
+        f"10011001:"
         f"10111101:"
         f"01000010:"
         f"00111100:"
