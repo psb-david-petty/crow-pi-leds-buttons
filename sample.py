@@ -21,6 +21,6 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        grid.clear()
-        buttons.cleanup()
+        grid.clear()            # turn all LEDS off
+        buttons.cleanup()       # reset GPIO
         print('done...')
