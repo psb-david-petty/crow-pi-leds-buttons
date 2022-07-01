@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# petty.py
+# demo.py
 #
-# matrix_demo Copyright (c) 2017-18 Richard Hull and contributors
+# Based on matrix_demo Copyright (c) 2017-18 Richard Hull and contributors
 # See LICENSE.rst for details.
 
 import time
